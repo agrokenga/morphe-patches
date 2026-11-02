@@ -16,6 +16,11 @@ Use the button below, or add `agrokenga/morphe-patches` as a patch source in Mor
   <img src=".github/assets/add-to-morphe.svg" alt="Add to Morphe" height="48">
 </a>
 
+## 📚 Project notes
+
+Architecture notes, review findings, probe results, and CI details are in
+[docs/README.md](docs/README.md).
+
 ## 🩹 Patches list
 
 <!-- PATCHES_START EXPANDED -->
