@@ -43,7 +43,7 @@ private val ARM64_RET = byteArrayOf(0xC0.toByte(), 0x03, 0x5F, 0xD6.toByte())
 // ARMv7 ARM-mode `bx lr`
 private val ARMV7_BX_LR = byteArrayOf(0x1E.toByte(), 0xFF.toByte(), 0x2F.toByte(), 0xE1.toByte())
 
-private data class Segment(
+internal data class Segment(
     val type: Long,
     val flags: Long,
     val offset: Long,
@@ -51,13 +51,13 @@ private data class Segment(
     val filesz: Long,
 )
 
-private data class ElfInfo(
+internal data class ElfInfo(
     val is64: Boolean,
     val machine: Int,
     val segments: List<Segment>,
 )
 
-private fun readElf(file: File): ElfInfo {
+internal fun readElf(file: File): ElfInfo {
     RandomAccessFile(file, "r").use { raf ->
         val ident = ByteArray(16)
         raf.readFully(ident)

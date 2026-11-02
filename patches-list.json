@@ -180,6 +180,43 @@
           "values": null
         }
       ]
+    },
+    {
+      "name": "Native Visual Feedback",
+      "description": "Hooks every probed purchase and PlayFab method in libil2cpp.so and logs \"CALLED: <method>\" through NGUIDebug's on-screen overlay. Diagnostic only; it does not change any return value, response, entitlement, or purchase result.",
+      "default": false,
+      "category": null,
+      "compatiblePackages": [
+        {
+          "packageName": "com.paradoxplaza.kopp2",
+          "name": "KoPP2",
+          "description": null,
+          "apkFileType": "APKM",
+          "appIconColor": "#FFD700",
+          "signatures": null,
+          "formFactor": "MOBILE",
+          "targets": [
+            {
+              "version": "2.21.4",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "key": "nativeVisualFeedbackEnable",
+          "title": "Show native call log overlay",
+          "description": "Install diagnostic hooks for the probed purchase and PlayFab methods. The hooks only log; they do not alter return values or purchases. Disabled by default.",
+          "required": false,
+          "type": "kotlin.Boolean",
+          "default": false,
+          "values": null
+        }
+      ]
     }
   ]
 }
