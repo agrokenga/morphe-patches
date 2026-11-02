@@ -3,6 +3,43 @@
   "version": "1.0.1-dev.1",
   "patches": [
     {
+      "name": "Cheats Screen Unlock",
+      "description": "Makes the in-game Cheats screen reachable by redirecting the Settings -> Credits button to SystemScreen.OpenCheats. Single-player UI only; it does not grant items, currency, or purchases.",
+      "default": false,
+      "category": null,
+      "compatiblePackages": [
+        {
+          "packageName": "com.paradoxplaza.kopp2",
+          "name": "KoPP2",
+          "description": null,
+          "apkFileType": "APKM",
+          "appIconColor": "#FFD700",
+          "signatures": null,
+          "formFactor": "MOBILE",
+          "targets": [
+            {
+              "version": "2.21.4",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "key": "cheatsScreenUnlockEnable",
+          "title": "Open Cheats from Settings -> Credits",
+          "description": "Patch SystemScreen.OpenCredits to jump to SystemScreen.OpenCheats. The Credits button then opens the Cheats panel. Disabled by default.",
+          "required": false,
+          "type": "kotlin.Boolean",
+          "default": false,
+          "values": null
+        }
+      ]
+    },
+    {
       "name": "Example Patch",
       "description": "Example patch to start with.",
       "default": false,
@@ -100,6 +137,43 @@
           "key": "iapProbeWriteBack",
           "title": "Test APK write-back",
           "description": "Append one harmless byte to libil2cpp.so so the patcher has to rewrite and re-align the native-library entry. Disabled by default; enable only to verify the extract -> edit -> rebuild -> install pipeline.",
+          "required": false,
+          "type": "kotlin.Boolean",
+          "default": false,
+          "values": null
+        }
+      ]
+    },
+    {
+      "name": "Native Method Patch Demo",
+      "description": "Replaces the harmless CheatsScreen.ShowCheatAlert method with an immediate return in both libil2cpp.so ABIs. Demonstrates static ELF RVA mapping and byte patching; it does not touch billing, purchases, entitlements, or networking.",
+      "default": false,
+      "category": null,
+      "compatiblePackages": [
+        {
+          "packageName": "com.paradoxplaza.kopp2",
+          "name": "KoPP2",
+          "description": null,
+          "apkFileType": "APKM",
+          "appIconColor": "#FFD700",
+          "signatures": null,
+          "formFactor": "MOBILE",
+          "targets": [
+            {
+              "version": "2.21.4",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "key": "nativeMethodPatchDemoEnable",
+          "title": "Patch ShowCheatAlert (demo)",
+          "description": "Replace CheatsScreen.ShowCheatAlert with an immediate return. This is a harmless UI alert, not billing or purchase code. Disabled by default.",
           "required": false,
           "type": "kotlin.Boolean",
           "default": false,
