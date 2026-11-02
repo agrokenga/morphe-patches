@@ -1,16 +1,18 @@
-# Independent App Patches
+# Agrokenga's Morphe Patches
 
-An independent collection of Android app patches. This is a third-party project and is not affiliated with the Morphe project.
+<img src="patches-bundle.png" alt="Agrokenga's Morphe Patches icon" width="128" align="right">
+
+A collection of Android app patches maintained by Agrokenga. This is a third-party project and is not affiliated with the Morphe project.
 
 ## ❓ About
 
-Patch bundles are intended for compatible Android patching tools. Add app-specific patches under `patches/src/main` and extensions under `extensions/` as needed.
+Patch bundles are intended for compatible Android patching tools. Add app-specific patches under `patches/src/main/kotlin` and extensions under `extensions/` as needed.
 
 ### How to use these patches
 
-After publishing this repository on GitHub, replace `OWNER/REPOSITORY` below with its actual address. Then use the button or add the source URL in Morphe Manager.
+Use the button below, or add `agrokenga/morphe-patches` as a patch source in Morphe Manager.
 
-<a href="https://morphe.software/add-source?github=OWNER/REPOSITORY">
+<a href="https://morphe.software/add-source?github=agrokenga/morphe-patches">
   <img src=".github/assets/add-to-morphe.svg" alt="Add to Morphe" height="48">
 </a>
 
@@ -34,11 +36,11 @@ After publishing this repository on GitHub, replace `OWNER/REPOSITORY` below wit
 To start developing and publishing this project:
 
 1. [Setup](https://github.com/MorpheApp/morphe-documentation/blob/main/docs/morphe-development/README.md) your development environment including adding a GitHub PAT as described [here](https://github.com/MorpheApp/morphe-patcher/blob/main/docs/2_1_setup.md#-prepare-the-environment).
-2. Create a GitHub repository with a distinct project name from this template, including all branches. Do not use Morphe as the project name or branding; see [NOTICE](NOTICE). Add it as `origin` (`git remote add origin https://github.com/OWNER/REPOSITORY.git`); push your setup changes on `dev`, then merge `dev` into `main` when ready for the first stable release.
-3. Connect the repository to Semaphore CI and add a project secret named `morphe-patches-ci` containing `GITHUB_TOKEN` and, if signing releases, `MORPHE_SIGNING_KEY`. The GitHub token must be able to create releases, push release commits/backmerges, and open pull requests.
+2. Use a distinct project name and do not use Morphe as the project name or branding; see [NOTICE](NOTICE). Add the repository as `origin` (`git remote add origin https://github.com/agrokenga/morphe-patches.git`); push setup changes on `dev`, then merge `dev` into `main` when ready for the first stable release.
+3. Connect the repository to Semaphore CI and add a project secret named `morphe-patches-ci` containing `GITHUB_TOKEN` and, if signing releases, `MORPHE_SIGNING_KEY`. The GitHub token must have `read:packages` access to the `MorpheApp/registry` GitHub Packages registry, plus permission to create releases, push release commits/backmerges, and open pull requests.
 4. Update the project group and metadata in [patches/build.gradle.kts](patches/build.gradle.kts), including the source URL, author, contact, and website.
-5. Replace `OWNER/REPOSITORY` in this README and the issue templates under `.github/ISSUE_TEMPLATE/`.
-6. (Optional): Add `patches-bundle.png` to the project if you want a custom icon to show in
+5. Confirm the links in this README and the issue templates under `.github/ISSUE_TEMPLATE/` point to `agrokenga/morphe-patches`.
+6. (Optional): Replace the included `patches-bundle.png` with your own image if you want a different icon to show in
    Morphe Manager instead of your GitHub profile avatar.
 7. (Optional): Sign your releases, so Morphe Manager refuses a release that was changed or swapped after you published it:
    1. Run `./gradlew generateSigningKey`. It creates `morphe-signing.pub` and `morphe-signing.key`.
@@ -94,4 +96,4 @@ See the [Morphe documentation](https://github.com/MorpheApp/morphe-documentation
 
 ## 📜 License
 
-Independent App Patches are licensed under the [GNU General Public License v3.0](LICENSE), with additional conditions described in [NOTICE](NOTICE). Preserve required attribution and use distinct branding for derivative works.
+Agrokenga's Morphe Patches are licensed under the [GNU General Public License v3.0](LICENSE), with additional conditions described in [NOTICE](NOTICE). Preserve required attribution and use distinct branding for derivative works.
