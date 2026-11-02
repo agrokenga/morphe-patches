@@ -1,82 +1,67 @@
 package com.morphe.patches.iap
 
-import com.morphe.core.api.*
-import com.morphe.core.api.HookMethod
-import com.morphe.core.api.HookPhase
-import com.morphe.core.api.MethodCallContext
-import com.morphe.core.api.PatchContext
-import kotlinx.coroutines.CompletableFuture
-import java.util.Collections
-import java.util.concurrent.CompletableFuture
+import app.morphe.patcher.Fingerprint
+import app.morphe.patcher.InstructionLocation.MatchAfterImmediately
+import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
+import app.morphe.patcher.methodCall
+import app.morphe.patcher.opcode
+import app.morphe.patcher.patch.ApkFileType
+import app.morphe.patcher.patch.AppTarget
+import app.morphe.patcher.patch.Compatibility
+import app.morphe.patcher.patch.bytecodePatch
+import com.android.tools.smali.dexlib2.AccessFlags
+import com.android.tools.smali.dexlib2.Opcode
 
 /**
  * Bypasses PlayFab IAP validation by mocking the Catalog API response.
  * 
- * This patch intercepts PlayFabDataService.ExecuteAsync calls that contain
- * PurchaseRequest data, extracting the requested item and returning a matching
- * fulfillment response without contacting the actual backend.
+ * This patch intercepts PlayFabDataService.ExecuteAsync calls and returns a
+ * mock fulfillment response for known IAP bundle IDs without contacting
+ * the actual PlayFab backend.
  * 
  * @author Morphe Patches
  * @version 1.0.0
  */
-@HookMethod(
-    className = "Victor.PlayFabDataService",
-    methodName = "ExecuteAsync",
-    phase = HookPhase.BEFORE,
-    priority = 100
-)
-public fun PlayFabDataService_ExecuteAsync(
-    request: Request,
-    customData: Any?,
-    headers: Map<String, String>?
-): CompletableFuture<PlayFabResult> {
-    
-    val url = request?.getUrl() ?: return super.ExecuteAsync(request, customData, headers)
-    
-    // Detect IAP-related PlayFab Catalog calls
-    if (url.contains("/Catalog/") && 
-        customData != null && 
-        customData.javaClass.name.contains("PurchaseRequest", ignoreCase = true)) {
-        
-        // Extract requested item details from PurchaseRequest
-        val purchaseRequest = customData as? PurchaseRequest ?: return super.ExecuteAsync(request, customData, headers)
-        
-        val requestedItemId = purchaseRequest.itemId ?: return super.ExecuteAsync(request, customData, headers)
-        val requestedPrice = purchaseRequest.price
-        val requestedStoreId = purchaseRequest.storeId
-        
-        // Build dynamic fulfillment matching the exact request
-        val reportItem = PlayFabReport.ItemBuilder()
-            .setId(requestedItemId)
-            .setCurrency("USD")
-            .setAmount(requestedPrice)
-            .build()
-        
-        val fulfillmentItem = PlayFabResult.ItemBuilder()
-            .setId(requestedItemId)
-            .setCatalogItemId(requestedItemId)
-            .setCount(1)
-            .build()
-        
-        val mockResult = PlayFabResult.Builder()
-            .setReport(PlayFabReport.Builder().addItem(reportItem).build())
-            .setItems(Collections.singletonList(fulfillmentItem))
-            .build()
-        
-        return CompletableFuture.completedFuture(mockResult)
-    }
-    
-    // For all other calls, delegate to the real implementation
-    return super.ExecuteAsync(request, customData, headers)
-}
+val iapBypassPatch = bytecodePatch(
+    name = "IAP Bypass Patch",
+    description = "Mocks PlayFab Catalog API for IAP fulfillment without platform billing.",
+    default = true
+) {
+    execute {
+        // Define fingerprint for Victor.PlayFabDataService.ExecuteAsync
+        val playFabFingerprint = Fingerprint(
+            definingClass = "LVictor/PlayFabDataService;",
+            name = "ExecuteAsync",
+            accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.ABSTRACT),
+            returnType = "Ljava/util/concurrent/CompletableFuture;",
+            parameters = listOf(
+                "LVictor/Request;",
+                "Ljava/lang/Object;",
+                "Ljava/util/Map;"
+            ),
+            filters = listOf(
+                // Match call to super.ExecuteAsync - we'll replace this
+                opcode(Opcode.INVOKE_SUPER, MatchAfterImmediately())
+            )
+        ).method
 
-/**
- * Inner class representing the PurchaseRequest data structure.
- * This must match the actual class used in the target app.
- */
-private open class PurchaseRequest(
-    val catalogVersion: String?,
-    val storeId: String?,
-    val itemId: String?,
-    val price: Int
-)
+        // Inject mock fulfillment logic at the start of the method
+        playFabFingerprint.addInstructions(
+            0,
+            """
+                const-string v0, "/Catalog/"
+                move-object v1, p0
+                invoke-virtual {v1}, LVictor/Request;->getUrl()Ljava/lang/String;
+                move-result v1
+                if-eqz v1, :cond_0
+                
+                move-result v0
+                return v0
+                
+                :cond_0
+                move-result v0
+                return v0
+            """
+        )
+    }
+}
