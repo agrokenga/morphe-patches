@@ -1,3 +1,9 @@
+## [1.1.0-dev.1](https://github.com/[secure]/morphe-patches/compare/v1.0.1-dev.1...v1.1.0-dev.1) (2026-11-02)
+
+### ✨ New Features
+
+* **patches:** add native demo and cheats screen unlock ([26582a1](https://github.com/[secure]/morphe-patches/commit/26582a1baae3d5ffba7096ce353a3e019da75ca3))
+
 ## [1.0.1-dev.1](https://github.com/[secure]/morphe-patches/compare/v1.0.0...v1.0.1-dev.1) (2026-11-02)
 
 ### 🐛 Bug Fixes

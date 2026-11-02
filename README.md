@@ -19,7 +19,27 @@ Use the button below, or add `agrokenga/morphe-patches` as a patch source in Mor
 ## 🩹 Patches list
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.0.1-dev.1](https://github.com/agrokenga/morphe-patches/releases/tag/v1.0.1-dev.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;3 patches total
+> **[v1.1.0-dev.1](https://github.com/agrokenga/morphe-patches/releases/tag/v1.1.0-dev.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;5 patches total
+<details open>
+<summary>📦 KoPP2&nbsp;&nbsp;•&nbsp;&nbsp;4 patches</summary>
+<br>
+
+**Package name:** `com.paradoxplaza.kopp2`
+
+**🎯 Supported versions:**
+
+| 2.21.4 |
+| :---: |
+
+| 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
+|----------|----------------|-----------|
+| [Cheats Screen Unlock](#cheats-screen-unlock) | Makes the in-game Cheats screen reachable by redirecting the Settings -> Credits button to SystemScreen.OpenCheats. Single-player UI only; it does not grant items, currency, or purchases. | • Open Cheats from Settings -> Credits |
+| [IAP Bypass Patch](#iap-bypass-patch) | Mocks PlayFab Catalog API for IAP fulfillment without platform billing. |  |
+| [IAP Native Probe](#iap-native-probe) | Read-only diagnostics for libil2cpp.so: hashes the library and checks whether the KoPP2 2.21.4 PurchaseItem and IAP grant-function offsets are reachable in both ABIs. | • Test APK write-back |
+| [Native Method Patch Demo](#native-method-patch-demo) | Replaces the harmless CheatsScreen.ShowCheatAlert method with an immediate return in both libil2cpp.so ABIs. Demonstrates static ELF RVA mapping and byte patching; it does not touch billing, purchases, entitlements, or networking. | • Patch ShowCheatAlert (demo) |
+
+</details>
+
 <details open>
 <summary>📦 XYZ app&nbsp;&nbsp;•&nbsp;&nbsp;1 patch</summary>
 <br>
@@ -34,24 +54,6 @@ Use the button below, or add `agrokenga/morphe-patches` as a patch source in Mor
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
 |----------|----------------|-----------|
 | [Example Patch](#example-patch) | Example patch to start with. |  |
-
-</details>
-
-<details open>
-<summary>📦 KoPP2&nbsp;&nbsp;•&nbsp;&nbsp;2 patches</summary>
-<br>
-
-**Package name:** `com.paradoxplaza.kopp2`
-
-**🎯 Supported versions:**
-
-| 2.21.4 |
-| :---: |
-
-| 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
-|----------|----------------|-----------|
-| [IAP Bypass Patch](#iap-bypass-patch) | Mocks PlayFab Catalog API for IAP fulfillment without platform billing. |  |
-| [IAP Native Probe](#iap-native-probe) | Read-only diagnostics for libil2cpp.so: hashes the library and checks whether the KoPP2 2.21.4 PurchaseItem and IAP grant-function offsets are reachable in both ABIs. | • Test APK write-back |
 
 </details>
 
