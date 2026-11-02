@@ -1,4 +1,4 @@
-package app.template.extension.extension;
+package io.agrokenga.extension;
 
 @SuppressWarnings("unused")
 public class ExamplePatch {

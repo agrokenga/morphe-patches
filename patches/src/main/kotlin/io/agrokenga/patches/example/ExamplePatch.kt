@@ -1,16 +1,16 @@
-package app.template.patches.example
+package io.agrokenga.patches.example
 
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.patch.bytecodePatch
-import app.template.patches.shared.Constants.COMPATIBILITY_EXAMPLE
+import io.agrokenga.patches.shared.Constants.COMPATIBILITY_EXAMPLE
 
-private const val EXTENSION_CLASS = "Lapp/template/extension/ExamplePatch;"
+private const val EXTENSION_CLASS = "Lio/agrokenga/extension/ExamplePatch;"
 
 @Suppress("unused")
 val examplePatch = bytecodePatch(
     name = "Example Patch",
     description = "Example patch to start with.",
-    default = true
+    default = false
 ) {
     compatibleWith(COMPATIBILITY_EXAMPLE)
 

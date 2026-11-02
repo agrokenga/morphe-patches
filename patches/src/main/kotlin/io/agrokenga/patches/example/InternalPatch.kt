@@ -1,4 +1,4 @@
-package app.template.patches.example
+package io.agrokenga.patches.example
 
 import app.morphe.patcher.Fingerprint
 import app.morphe.patcher.extensions.InstructionExtensions.addInstruction

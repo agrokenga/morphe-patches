@@ -1,1 +1,1 @@
-// Root build configuration for Independent App Patches.
+// Root build configuration for Agrokenga's Morphe Patches.

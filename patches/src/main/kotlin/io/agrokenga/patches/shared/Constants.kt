@@ -1,4 +1,4 @@
-package app.template.patches.shared
+package io.agrokenga.patches.shared
 
 import app.morphe.patcher.patch.ApkFileType
 import app.morphe.patcher.patch.AppTarget
@@ -42,7 +42,7 @@ object Constants {
         name = "XYZ app",
         packageName = "com.example.app",
         apkFileType = ApkFileType.APKM,
-        appIconColor = 0x00FF45, // Icon color in Morphe Manager. Usually the same color as the icon background.
+        appIconColor = 0xFF0045, // Icon color in Morphe Manager. Usually the same color as the icon background.
         targets = listOf(
             // 'any' version supported experimentally.
             AppTarget(
@@ -63,7 +63,7 @@ object Constants {
         name = "XYZ app",
         packageName = "com.example.app",
         apkFileType = ApkFileType.APKM,
-        appIconColor = 0x00FF45,
+        appIconColor = 0xFF0045,
         targets = listOf(
             AppTarget(
                 version = "1.0.5",
