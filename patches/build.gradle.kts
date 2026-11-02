@@ -1,14 +1,13 @@
-group = "app.template"
+group = "io.agrokenga.patches"
 
 patches {
-    // TODO: Update this section with your project details.
     about {
-        name = "UserXYZ Patches"
-        description = "Patches for apps I like"
-        source = "git@github.com:UserXYZ/morphe-patches.git"
-        author = "Awesome dev"
-        contact = "na"
-        website = "na"
+        name = "Agrokenga's Morphe Patches"
+        description = "Third-party Morphe patches for Android apps"
+        source = "https://github.com/agrokenga/morphe-patches"
+        author = "Repository maintainer"
+        contact = "Not configured"
+        website = "Not configured"
         license = "GPLv3"
     }
 }
