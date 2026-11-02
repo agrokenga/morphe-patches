@@ -18,7 +18,7 @@ After publishing this repository on GitHub, replace `OWNER/REPOSITORY` below wit
 
 <!-- PATCHES_START EXPANDED -->
 
-<!-- Do not modify this section by hand. The patch list is generated when release.yml creates a new release.
+<!-- Do not modify this section by hand. The patch list is generated when the Semaphore pipeline creates a new release.
      
      If you wish for the patches list to be collapsed, then remove the word 'EXPANDED' from the comment tag above.
 
@@ -35,7 +35,7 @@ To start developing and publishing this project:
 
 1. [Setup](https://github.com/MorpheApp/morphe-documentation/blob/main/docs/morphe-development/README.md) your development environment including adding a GitHub PAT as described [here](https://github.com/MorpheApp/morphe-patcher/blob/main/docs/2_1_setup.md#-prepare-the-environment).
 2. Create a GitHub repository with a distinct project name from this template, including all branches. Do not use Morphe as the project name or branding; see [NOTICE](NOTICE). Add it as `origin` (`git remote add origin https://github.com/OWNER/REPOSITORY.git`); push your setup changes on `dev`, then merge `dev` into `main` when ready for the first stable release.
-3. Set the repository's **Actions > General > Workflow permissions** to allow GitHub Actions to create and approve pull requests.
+3. Connect the repository to Semaphore CI and add a project secret named `morphe-patches-ci` containing `GITHUB_TOKEN` and, if signing releases, `MORPHE_SIGNING_KEY`. The GitHub token must be able to create releases, push release commits/backmerges, and open pull requests.
 4. Update the project group and metadata in [patches/build.gradle.kts](patches/build.gradle.kts), including the source URL, author, contact, and website.
 5. Replace `OWNER/REPOSITORY` in this README and the issue templates under `.github/ISSUE_TEMPLATE/`.
 6. (Optional): Add `patches-bundle.png` to the project if you want a custom icon to show in
@@ -43,8 +43,8 @@ To start developing and publishing this project:
 7. (Optional): Sign your releases, so Morphe Manager refuses a release that was changed or swapped after you published it:
    1. Run `./gradlew generateSigningKey`. It creates `morphe-signing.pub` and `morphe-signing.key`.
    2. Commit `morphe-signing.pub`. Never commit `morphe-signing.key`, it is already ignored by git.
-   3. Add the content of `morphe-signing.key` as the `MORPHE_SIGNING_KEY` secret in your repo
-      Settings > Secrets and variables > Actions, then keep a backup of it somewhere safe and delete the file.
+   3. Add the content of `morphe-signing.key` as the `MORPHE_SIGNING_KEY` variable in the
+      `morphe-patches-ci` Semaphore project secret, then keep a backup of it somewhere safe and delete the file.
 
    Every release is signed from then on. If you lose the key or it leaks, create a new one the same way;
    users then have to confirm the new key in Morphe Manager before they get your next release.
@@ -64,16 +64,16 @@ To develop and release these patches:
 - Commits of `fix:` and `feat:` will automatically generate new pre-releases and `chore:` will not create a new release.
 - Users can apply your dev branch releases by enabling `pre-release` in Morphe Manager patch sources.
 - When your dev branch is ready, and you want a stable release, merge dev branch to main (do not squash, and only merge).
-- **Always use semantic release (release.yml)**. Do not manually upload or create releases by hand
-  because many files must be updated and release.yml handles everything.
+- **Always use semantic release (the Semaphore pipeline)**. Do not manually upload or create releases by hand
+  because many files must be updated and the pipeline handles everything.
 
 ## 🤓 Tips
 - See the [patcher documentation](https://github.com/MorpheApp/morphe-patcher/blob/main/docs/1_patcher_intro.md) for more examples of creating patches and fingerprints.
-- Do not use AI to create new release scripts. The `release.yml` here already handles everything.
-  If you need something custom with your releases then modify the existing `release.yml`
-  and `.releaserc` instead of writing everything new from scratch.
+- Do not use AI to create new release scripts. The Semaphore pipeline here already handles everything.
+  If you need something custom with your releases, modify `.semaphore/semaphore.yml` and `.releaserc`
+  instead of writing everything new from scratch.
 - Do not manually edit or manually commit any generated files such as: `patches-list.json`,
-  `patches-bundle.json`, `CHANGELOG.md`.  These files will be automatically updated by `release.yml`.
+  `patches-bundle.json`, `CHANGELOG.md`. These files are automatically updated by the Semaphore pipeline.
 - Do not force push any semantic release commits as that will break all future releases.
   If you need to fix a broken release, it's always easiest to create a new release instead of 
   fixing an existing release.
