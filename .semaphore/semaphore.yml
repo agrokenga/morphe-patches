@@ -21,6 +21,25 @@ blocks:
             fi
           - git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
           - git fetch --all --tags
+          - export GITHUB_ACTOR="${GITHUB_ACTOR:-${SEMAPHORE_GIT_REPO_OWNER:-agrokenga}}"
+          - |
+            if [ -z "${GITHUB_TOKEN:-}" ]; then
+              echo "GITHUB_TOKEN is not set. Attach the morphe-patches-ci secret."
+              exit 1
+            fi
+            token_user=$(curl -fsSL -H "Authorization: Bearer $GITHUB_TOKEN" \
+              https://api.github.com/user 2>/dev/null | sed -n 's/.*"login"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)
+            if [ -n "$token_user" ]; then
+              export GITHUB_ACTOR="$token_user"
+            fi
+            status=$(curl -sL -o /dev/null -w '%{http_code}' \
+              -u "$GITHUB_ACTOR:$GITHUB_TOKEN" \
+              "https://maven.pkg.github.com/MorpheApp/registry/app/morphe/patches/app.morphe.patches.gradle.plugin/2.1.0/app.morphe.patches.gradle.plugin-2.1.0.pom")
+            if [ "$status" != "200" ]; then
+              echo "GitHub Packages authentication failed (HTTP $status) for MorpheApp/registry."
+              echo "The morphe-patches-ci GITHUB_TOKEN needs read:packages access, plus SSO authorization if the organization requires it."
+              exit 1
+            fi
       secrets:
         - name: morphe-patches-ci
       jobs:
@@ -31,14 +50,20 @@ blocks:
             - export GITHUB_REPOSITORY="$SEMAPHORE_GIT_REPO_SLUG"
             - export GITHUB_REF_NAME="$SEMAPHORE_GIT_BRANCH"
             - git remote set-url origin "https://github.com/$GITHUB_REPOSITORY.git"
-            - printf 'https://x-access-token:%s@github.com\n' "$GITHUB_TOKEN" > "$HOME/.git-credentials"
-            - chmod 600 "$HOME/.git-credentials"
-            - git config --global credential.helper "store --file=$HOME/.git-credentials"
-            - npx semantic-release
+            - ./gradlew clean :patches:buildAndroid --no-daemon
             - |
-              if ! compgen -G 'patches/build/libs/patches-*.mpp' > /dev/null; then
-                ./gradlew :patches:buildAndroid clean --no-daemon
-              fi
+              cat > "$HOME/.git-askpass" <<'EOF'
+              #!/bin/sh
+              case "$1" in
+                *Username*) printf '%s\n' "x-access-token" ;;
+                *) printf '%s\n' "$GITHUB_TOKEN" ;;
+              esac
+              EOF
+              chmod +x "$HOME/.git-askpass"
+              export GIT_ASKPASS="$HOME/.git-askpass"
+              export GIT_TERMINAL_PROMPT=0
+              trap 'rm -f "$HOME/.git-askpass"' EXIT
+              npx semantic-release
 
   - name: Verify build
     run:
@@ -48,10 +73,13 @@ blocks:
         commands:
           - checkout
           - sem-version java 21
+          - export GITHUB_ACTOR="${GITHUB_ACTOR:-${SEMAPHORE_GIT_REPO_OWNER:-agrokenga}}"
+      secrets:
+        - name: morphe-patches-ci
       jobs:
         - name: Build patches
           commands:
-            - ./gradlew :patches:buildAndroid clean --no-daemon
+            - ./gradlew clean :patches:buildAndroid --no-daemon
 
   - name: Open pull request to main
     run:
