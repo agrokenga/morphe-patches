@@ -10,30 +10,25 @@ import app.morphe.patcher.patch.loadPatchesFromJar
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import java.io.File
-import java.net.URLClassLoader
-import java.util.jar.Manifest
+import java.util.jar.JarFile
 
 fun main() {
-    val patchFiles = setOf(
-        File("build/libs/").listFiles { file ->
+    val patchFile = File("build/libs/")
+        .listFiles { file ->
             val fileName = file.name
             !fileName.contains("javadoc") &&
                     !fileName.contains("sources") &&
                     fileName.endsWith(".mpp")
-        }!!.first()
-    )
-    val loadedPatches = loadPatchesFromJar(patchFiles)
-    val patchClassLoader = URLClassLoader(patchFiles.map { it.toURI().toURL() }.toTypedArray())
-    val manifest = patchClassLoader.getResources("META-INF/MANIFEST.MF")
+        }
+        ?.sortedBy { it.name }
+        ?.firstOrNull()
+        ?: error("No patch bundle (.mpp) found in build/libs. Run :patches:build first.")
 
-    while (manifest.hasMoreElements()) {
-        Manifest(manifest.nextElement().openStream())
-            .mainAttributes
-            .getValue("Version")
-            ?.let {
-                generatePatchList(it, loadedPatches)
-            }
-    }
+    val version = JarFile(patchFile).use { jar ->
+        jar.manifest?.mainAttributes?.getValue("Version")
+    } ?: error("No Version attribute in ${patchFile.name} META-INF/MANIFEST.MF")
+
+    generatePatchList(version, loadPatchesFromJar(setOf(patchFile)))
 }
 
 @Suppress("DEPRECATION")
@@ -93,7 +88,7 @@ private fun generatePatchList(version: String, patches: Set<Patch<*>>) {
     jsonObject.addProperty(
         "NOTE",
         "Do NOT manually edit this file. This file is automatically updated when " +
-                "semantic release (release.yml) runs. Manually editing this file can break " +
+                "semantic release (Semaphore CI) runs. Manually editing this file can break " +
                 "your releases and break third party tools that use this file."
     )
     jsonObject.addProperty("version", version)

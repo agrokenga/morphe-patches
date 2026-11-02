@@ -121,23 +121,25 @@ def versions_table(targets):
     if not targets:
         return ""
 
-    cells = []
+    entries = []
     for t in targets:
-        ver   = t["version"]
+        ver = t["version"]
         if ver is None:
             continue
         label = f"🧪&nbsp;{ver}" if t.get("isExperimental") else ver
-        cells.append(label)
+        desc = (t.get("description") or "").replace("\n", "<br>")
+        entries.append((label, desc))
 
-    if not cells:
+    if not entries:
         return ""
 
+    cells = [label for label, _ in entries]
     header = "| " + " | ".join(cells) + " |"
     sep = "| " + " | ".join(":---:" for _ in cells) + " |"
     rows = [header, sep]
 
     # Optional description row — only rendered if at least one target has one
-    descs = [(t.get("description") or "").replace("\n", "<br>") for t in targets]
+    descs = [desc for _, desc in entries]
     if any(descs):
         rows.append("| " + " | ".join(descs) + " |")
 
@@ -239,7 +241,7 @@ readme = readme.replace("https://github.com/OWNER/REPOSITORY", f"https://github.
 
 new_readme = re.sub(
     rf"{START_PATTERN}.*?{re.escape(END_MARKER)}",
-    f"{actual_start}\n{generated}\n{END_MARKER}",
+    lambda _: f"{actual_start}\n{generated}\n{END_MARKER}",
     readme,
     flags=re.DOTALL,
 )
