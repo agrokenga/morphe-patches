@@ -1,0 +1,16 @@
+## 1.0.0 (2026-11-02)
+
+### ✨ New Features
+
+* **iap:** add native libil2cpp probe patch ([9f746fa](https://github.com/[secure]/morphe-patches/commit/9f746fad61a5bf56b6240026bd6584b17c0dc665))
+* **iap:** add PlayFab IAP bypass patch with dynamic fulfillment mocking ([de8ee6a](https://github.com/[secure]/morphe-patches/commit/de8ee6ac874e826983c7fef1c2b5500764ea5ed4))
+* **iap:** add PlayFab IAP bypass patch with mock fulfillment ([c2477bd](https://github.com/[secure]/morphe-patches/commit/c2477bd34c3dc198e5cdef83fb3f9c0d95cfe224))
+
+### 🐛 Bug Fixes
+
+* changed a few configuration files ([4b59ad6](https://github.com/[secure]/morphe-patches/commit/4b59ad68cfc5be2b738755d3889ba768b4e65595))
+* **ci:** authenticate GitHub Packages and gate releases on build ([7b052f0](https://github.com/[secure]/morphe-patches/commit/7b052f0077bc08569e17899709fc12f48a7b4824))
+* **ci:** avoid empty Semaphore condition literals ([0b7cbff](https://github.com/[secure]/morphe-patches/commit/0b7cbff67f32d95f4214b75ca10b4c95db87cbbb))
+* **ci:** correct Semaphore condition quoting ([92f604d](https://github.com/[secure]/morphe-patches/commit/92f604d8887caaf0316958b7b84e98ae4e71173a))
+* **ci:** install Android SDK before Gradle builds ([c55e88a](https://github.com/[secure]/morphe-patches/commit/c55e88afe66b899f4e08f61e4d46b53880f66876))
+* **tooling:** harden patch metadata generation ([dd23dab](https://github.com/[secure]/morphe-patches/commit/dd23dabb4fb499c5cb859f72c6287bb516c067c6))

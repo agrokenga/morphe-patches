@@ -19,70 +19,42 @@ Use the button below, or add `agrokenga/morphe-patches` as a patch source in Mor
 ## 🩹 Patches list
 
 <!-- PATCHES_START EXPANDED -->
+> **[v1.0.0](https://github.com/agrokenga/morphe-patches/releases/tag/v1.0.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;3 patches total
+<details open>
+<summary>📦 XYZ app&nbsp;&nbsp;•&nbsp;&nbsp;1 patch</summary>
+<br>
 
-<!-- Do not modify this section by hand. The patch list is generated when the Semaphore pipeline creates a new release.
-     
-     If you wish for the patches list to be collapsed, then remove the word 'EXPANDED' from the comment tag above.
+**Package name:** `com.example.app`
 
-     If you wish to manually keep this list updated then remove the PATCHES_START and PATCHES_END 
-     comment blocks entirely. -->
+**🎯 Supported versions:**
 
-#### A list of your patches will automatically be shown here after your first patches release is created.
+| 2.0.0 | 1.0.2 |
+| :---: | :---: |
 
-&nbsp;
+| 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
+|----------|----------------|-----------|
+| [Example Patch](#example-patch) | Example patch to start with. |  |
 
-## 🚀 Getting development started
+</details>
 
-To start developing and publishing this project:
+<details open>
+<summary>📦 KoPP2&nbsp;&nbsp;•&nbsp;&nbsp;2 patches</summary>
+<br>
 
-1. [Setup](https://github.com/MorpheApp/morphe-documentation/blob/main/docs/morphe-development/README.md) your development environment including adding a GitHub PAT as described [here](https://github.com/MorpheApp/morphe-patcher/blob/main/docs/2_1_setup.md#-prepare-the-environment).
-2. Use a distinct project name and do not use Morphe as the project name or branding; see [NOTICE](NOTICE). Add the repository as `origin` (`git remote add origin https://github.com/agrokenga/morphe-patches.git`); push setup changes on `dev`, then merge `dev` into `main` when ready for the first stable release.
-3. Connect the repository to Semaphore CI and add a project secret named `morphe-patches-ci` containing `GITHUB_TOKEN` and, if signing releases, `MORPHE_SIGNING_KEY`. The GitHub token must have `read:packages` access to the `MorpheApp/registry` GitHub Packages registry, plus permission to create releases, push release commits/backmerges, and open pull requests.
-4. Update the project group and metadata in [patches/build.gradle.kts](patches/build.gradle.kts), including the source URL, author, contact, and website.
-5. Confirm the links in this README and the issue templates under `.github/ISSUE_TEMPLATE/` point to `agrokenga/morphe-patches`.
-6. (Optional): Replace the included `patches-bundle.png` with your own image if you want a different icon to show in
-   Morphe Manager instead of your GitHub profile avatar.
-7. (Optional): Sign your releases, so Morphe Manager refuses a release that was changed or swapped after you published it:
-   1. Run `./gradlew generateSigningKey`. It creates `morphe-signing.pub` and `morphe-signing.key`.
-   2. Commit `morphe-signing.pub`. Never commit `morphe-signing.key`, it is already ignored by git.
-   3. Add the content of `morphe-signing.key` as the `MORPHE_SIGNING_KEY` variable in the
-      `morphe-patches-ci` Semaphore project secret, then keep a backup of it somewhere safe and delete the file.
+**Package name:** `com.paradoxplaza.kopp2`
 
-   Every release is signed from then on. If you lose the key or it leaks, create a new one the same way;
-   users then have to confirm the new key in Morphe Manager before they get your next release.
+**🎯 Supported versions:**
 
-🎉 You are now ready to start creating patches!
+| 2.21.4 |
+| :---: |
 
-## 🧑‍💻 Dev usage
+| 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
+|----------|----------------|-----------|
+| [IAP Bypass Patch](#iap-bypass-patch) | Mocks PlayFab Catalog API for IAP fulfillment without platform billing. |  |
+| [IAP Native Probe](#iap-native-probe) | Read-only diagnostics for libil2cpp.so: hashes the library and checks whether the KoPP2 2.21.4 PurchaseItem and IAP grant-function offsets are reachable in both ABIs. | • Test APK write-back |
 
-To develop and release these patches:
+</details>
 
-- **Make all changes to the `dev` branch.**
-- For local development work build your patches using the gradle task `./gradlew buildAndroid` to generate the mpp file found in `patches/build/libs/patches-*.mpp`. Apply your patches locally using Morphe Desktop tool like any other patch bundle.
-- Always use [Semantic commit](https://kapeli.com/cheat_sheets/Semantic_Commits.docset/Contents/Resources/Documents/index) messages for commits. To keep it simple use only 3 commit message types: 
-  - `feat: Added a new feature`
-  - `fix: Some problem now fixed`
-  - `chore: Random change you do not want in the user facing changelog`
-- Commits of `fix:` and `feat:` will automatically generate new pre-releases and `chore:` will not create a new release.
-- Users can apply your dev branch releases by enabling `pre-release` in Morphe Manager patch sources.
-- When your dev branch is ready, and you want a stable release, merge dev branch to main (do not squash, and only merge).
-- **Always use semantic release (the Semaphore pipeline)**. Do not manually upload or create releases by hand
-  because many files must be updated and the pipeline handles everything.
-
-## 🤓 Tips
-- See the [patcher documentation](https://github.com/MorpheApp/morphe-patcher/blob/main/docs/1_patcher_intro.md) for more examples of creating patches and fingerprints.
-- Do not use AI to create new release scripts. The Semaphore pipeline here already handles everything.
-  If you need something custom with your releases, modify `.semaphore/semaphore.yml` and `.releaserc`
-  instead of writing everything new from scratch.
-- Do not manually edit or manually commit any generated files such as: `patches-list.json`,
-  `patches-bundle.json`, `CHANGELOG.md`. These files are automatically updated by the Semaphore pipeline.
-- Do not force push any semantic release commits as that will break all future releases.
-  If you need to fix a broken release, it's always easiest to create a new release instead of 
-  fixing an existing release.
-
-
-<!-- The patches end tag is intentionally placed here so the first release will clean up 
-     this readme of all developer instructions above. -->
 <!-- PATCHES_END -->
 
 ### 🛠️ Building locally
