@@ -8,6 +8,7 @@ import app.morphe.patcher.opcode
 import app.morphe.patcher.patch.ApkFileType
 import app.morphe.patcher.patch.AppTarget
 import app.morphe.patcher.patch.Compatibility
+import app.morphe.patcher.patch.PatchException
 import app.morphe.patcher.patch.bytecodePatch
 import com.android.tools.smali.dexlib2.AccessFlags
 import com.android.tools.smali.dexlib2.Opcode
@@ -27,8 +28,20 @@ val iapBypassPatch = bytecodePatch(
     description = "Mocks PlayFab Catalog API for IAP fulfillment without platform billing.",
     default = true
 ) {
+    compatibleWith(
+        Compatibility(
+            name = "KoPP2",
+            packageName = "com.paradoxplaza.kopp2",
+            apkFileType = ApkFileType.APK,
+            appIconColor = 0xFFD700,
+            targets = listOf(
+                AppTarget(version = "2.21.4"),
+                AppTarget(version = null, isExperimental = true)
+            )
+        )
+    )
+
     execute {
-        // Define fingerprint for Victor.PlayFabDataService.ExecuteAsync
         val playFabFingerprint = Fingerprint(
             definingClass = "LVictor/PlayFabDataService;",
             name = "ExecuteAsync",
@@ -40,12 +53,14 @@ val iapBypassPatch = bytecodePatch(
                 "Ljava/util/Map;"
             ),
             filters = listOf(
-                // Match call to super.ExecuteAsync - we'll replace this
                 opcode(Opcode.INVOKE_SUPER, MatchAfterImmediately())
             )
         ).method
 
-        // Inject mock fulfillment logic at the start of the method
+        if (playFabFingerprint == null) {
+            throw PatchException("Failed to find PlayFabDataService.ExecuteAsync")
+        }
+
         playFabFingerprint.addInstructions(
             0,
             """
@@ -61,7 +76,7 @@ val iapBypassPatch = bytecodePatch(
                 :cond_0
                 move-result v0
                 return v0
-            """
+            """.trimIndent()
         )
     }
 }
