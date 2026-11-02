@@ -1,5 +1,5 @@
 {
-  "name": "independent-app-patches",
+  "name": "@agrokenga/morphe-patches",
   "devDependencies": {
     "@cleyrop-org/semantic-release-backmerge": "^6.2.0",
     "@MorpheApp/changelog": "git+https://github.com/MorpheApp/changelog.git#bundle",

@@ -4,7 +4,7 @@ patches {
     about {
         name = "Agrokenga's Morphe Patches"
         description = "Third-party Morphe patches for Android apps"
-        source = "https://github.com/OWNER/REPOSITORY"
+        source = "https://github.com/agrokenga/morphe-patches"
         author = "Repository maintainer"
         contact = "Not configured"
         website = "Not configured"
