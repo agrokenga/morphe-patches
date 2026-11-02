@@ -8,7 +8,7 @@ agent:
 blocks:
   - name: Release
     run:
-      when: "pull_request = '' and tag = '' and (branch = 'main' or branch = 'dev')"
+      when: 'pull_request = "" and tag = "" and (branch = "main" or branch = "dev")'
     task:
       prologue:
         commands:
@@ -42,7 +42,7 @@ blocks:
 
   - name: Verify build
     run:
-      when: "pull_request != '' or tag != '' or (branch != 'main' and branch != 'dev')"
+      when: 'pull_request != "" or tag != "" or (branch != "main" and branch != "dev")'
     task:
       prologue:
         commands:
@@ -55,7 +55,7 @@ blocks:
 
   - name: Open pull request to main
     run:
-      when: "pull_request = '' and tag = '' and branch = 'dev'"
+      when: 'pull_request = "" and tag = "" and branch = "dev"'
     task:
       prologue:
         commands:
