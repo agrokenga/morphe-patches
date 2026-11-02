@@ -1,3 +1,9 @@
+## [1.0.1-dev.1](https://github.com/[secure]/morphe-patches/compare/v1.0.0...v1.0.1-dev.1) (2026-11-02)
+
+### 🐛 Bug Fixes
+
+* **iap:** parse ELF32 segment flags correctly ([d39d9aa](https://github.com/[secure]/morphe-patches/commit/d39d9aae13cfbaef43102cc9cb90e27ea0d6fe8e))
+
 ## 1.0.0 (2026-11-02)
 
 ### ✨ New Features
