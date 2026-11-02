@@ -15,6 +15,7 @@ blocks:
           - checkout
           - sem-version java 21
           - sem-version node 24
+          - bash scripts/install-android-sdk.sh
           - |
             if [ "$(git rev-parse --is-shallow-repository)" = true ]; then
               git fetch --unshallow
@@ -73,6 +74,7 @@ blocks:
         commands:
           - checkout
           - sem-version java 21
+          - bash scripts/install-android-sdk.sh
           - export GITHUB_ACTOR="${GITHUB_ACTOR:-${SEMAPHORE_GIT_REPO_OWNER:-agrokenga}}"
       secrets:
         - name: morphe-patches-ci
