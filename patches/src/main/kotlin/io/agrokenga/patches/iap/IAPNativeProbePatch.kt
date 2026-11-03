@@ -140,16 +140,19 @@ private fun readElf(file: File): ElfInfo {
             val entry = ByteBuffer.wrap(programHeader).order(ByteOrder.LITTLE_ENDIAN)
 
             val type = entry.getInt(0).toLong() and 0xFFFFFFFFL
-            val flags = entry.getInt(4).toLong() and 0xFFFFFFFFL
+            val flags: Long
             val offset: Long
             val vaddr: Long
             val filesz: Long
 
             if (is64) {
+                flags = entry.getInt(4).toLong() and 0xFFFFFFFFL
                 offset = entry.getLong(8)
                 vaddr = entry.getLong(16)
                 filesz = entry.getLong(32)
             } else {
+                // ELF32 program headers put p_flags after p_filesz/p_memsz, at offset 24.
+                flags = entry.getInt(24).toLong() and 0xFFFFFFFFL
                 offset = entry.getInt(4).toLong() and 0xFFFFFFFFL
                 vaddr = entry.getInt(8).toLong() and 0xFFFFFFFFL
                 filesz = entry.getInt(16).toLong() and 0xFFFFFFFFL
