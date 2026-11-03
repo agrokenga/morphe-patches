@@ -24,7 +24,7 @@ Architecture notes, review findings, probe results, and CI details are in
 ## 🩹 Patches list
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.1.0-dev.6](https://github.com/agrokenga/morphe-patches/releases/tag/v1.1.0-dev.6)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;9 patches total
+> **[v1.1.0-dev.7](https://github.com/agrokenga/morphe-patches/releases/tag/v1.1.0-dev.7)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;9 patches total
 <details open>
 <summary>📦 KoPP2&nbsp;&nbsp;•&nbsp;&nbsp;8 patches</summary>
 <br>

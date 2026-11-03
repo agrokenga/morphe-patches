@@ -1,3 +1,9 @@
+## [1.1.0-dev.7](https://github.com/[secure]/morphe-patches/compare/v1.1.0-dev.6...v1.1.0-dev.7) (2026-11-03)
+
+### 🐛 Bug Fixes
+
+* **iap:** relax ELF header parsing in full bypass patch ([c8e8f1a](https://github.com/[secure]/morphe-patches/commit/c8e8f1a1e0723bea675549d48acb97114a8d1e5e))
+
 ## [1.1.0-dev.6](https://github.com/[secure]/morphe-patches/compare/v1.1.0-dev.5...v1.1.0-dev.6) (2026-11-03)
 
 ### ✨ New Features
