@@ -1,6 +1,6 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when semantic release (Semaphore CI) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.1.0-dev.3",
+  "version": "1.1.0-dev.4",
   "patches": [
     {
       "name": "Cheats Screen Unlock",
@@ -109,7 +109,7 @@
     },
     {
       "name": "IAP Free (All Items)",
-      "description": "Makes all in-game store purchases free by bypassing the PlayFab server. Patches StoreService.PurchaseItem to return immediately without contacting the server. Items are granted locally without server validation.",
+      "description": "Makes all in-game store purchases free by bypassing the PlayFab server. Patches PlayFabApiCall.Execute (premium bundles) and StoreService.PurchaseItem (in-game store) to return immediately without contacting the server.",
       "default": false,
       "category": null,
       "compatiblePackages": [
@@ -136,7 +136,7 @@
         {
           "key": "iapFreeEnable",
           "title": "Make all store items free",
-          "description": "Patch StoreService.PurchaseItem to bypass the PlayFab server and return immediately. All store purchases will succeed without contacting the server. Disabled by default.",
+          "description": "Patch PlayFabApiCall.Execute and StoreService.PurchaseItem to bypass the PlayFab server and return immediately. All store purchases will succeed without contacting the server. Disabled by default.",
           "required": false,
           "type": "kotlin.Boolean",
           "default": false,

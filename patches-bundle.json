@@ -1,8 +1,8 @@
 {
-  "created_at": "2026-11-03T04:51:18",
-  "description": "## [1.1.0-dev.3](https://github.com/[secure]/morphe-patches/compare/v1.1.0-dev.2...v1.1.0-dev.3) (2026-11-03)\n\n### ✨ New Features\n\n* **iap:** add IAP Free patch to bypass PlayFab server for store purchases ([e79dbd2](https://github.com/[secure]/morphe-patches/commit/e79dbd2f42511596bb101b8022ce5520b6adc852))",
-  "download_url": "https://github.com/agrokenga/morphe-patches/releases/download/v1.1.0-dev.3/patches-1.1.0-dev.3.mpp",
+  "created_at": "2026-11-03T05:19:40",
+  "description": "## [1.1.0-dev.4](https://github.com/[secure]/morphe-patches/compare/v1.1.0-dev.3...v1.1.0-dev.4) (2026-11-03)\n\n### 🐛 Bug Fixes\n\n* **iap:** patch correct method PlayFabApiCall.Execute instead of ExecuteAsync ([3d2cd25](https://github.com/[secure]/morphe-patches/commit/3d2cd25afcd8f92843752cc91ff2280309bdb78e))",
+  "download_url": "https://github.com/agrokenga/morphe-patches/releases/download/v1.1.0-dev.4/patches-1.1.0-dev.4.mpp",
   "signature_download_url": "",
-  "version": "1.1.0-dev.3",
+  "version": "1.1.0-dev.4",
   "public_key": "V6BM/7vMosC0XyY/zbpjxuDjigOyno8qmrp2uqobYn0="
 }

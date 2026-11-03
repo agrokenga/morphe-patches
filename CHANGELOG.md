@@ -1,3 +1,9 @@
+## [1.1.0-dev.4](https://github.com/[secure]/morphe-patches/compare/v1.1.0-dev.3...v1.1.0-dev.4) (2026-11-03)
+
+### 🐛 Bug Fixes
+
+* **iap:** patch correct method PlayFabApiCall.Execute instead of ExecuteAsync ([3d2cd25](https://github.com/[secure]/morphe-patches/commit/3d2cd25afcd8f92843752cc91ff2280309bdb78e))
+
 ## [1.1.0-dev.3](https://github.com/[secure]/morphe-patches/compare/v1.1.0-dev.2...v1.1.0-dev.3) (2026-11-03)
 
 ### ✨ New Features
