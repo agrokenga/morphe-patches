@@ -1,6 +1,6 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when semantic release (Semaphore CI) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "1.1.0-dev.5",
+  "version": "1.1.0-dev.6",
   "patches": [
     {
       "name": "Cheats Screen Unlock",
@@ -145,6 +145,43 @@
       ]
     },
     {
+      "name": "IAP Full Bypass",
+      "description": "Bypasses PlayFab validation and grants items locally, setting price to free.",
+      "default": true,
+      "category": null,
+      "compatiblePackages": [
+        {
+          "packageName": "com.paradoxplaza.kopp2",
+          "name": "KoPP2",
+          "description": null,
+          "apkFileType": "APKM",
+          "appIconColor": "#FFD700",
+          "signatures": null,
+          "formFactor": "MOBILE",
+          "targets": [
+            {
+              "version": "2.21.4",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": [
+        {
+          "key": "iapFullBypassEnabled",
+          "title": "Enable IAP Full Bypass",
+          "description": "If false, the patch is inactive.",
+          "required": false,
+          "type": "kotlin.Boolean",
+          "default": true,
+          "values": null
+        }
+      ]
+    },
+    {
       "name": "IAP Native Probe",
       "description": "Read-only diagnostics for libil2cpp.so: hashes the library and checks whether the KoPP2 2.21.4 PurchaseItem and IAP grant-function offsets are reachable in both ABIs.",
       "default": false,
@@ -254,6 +291,33 @@
           "values": null
         }
       ]
+    },
+    {
+      "name": "On-screen Game Log",
+      "description": "Adds a touch-through, auto-scrolling log panel over the lower 30% of the screen, with padding from the screen edges. It shows this process's logcat output (Unity Debug.Log, native and Java logs). Diagnostic only; no game state is changed.",
+      "default": false,
+      "category": null,
+      "compatiblePackages": [
+        {
+          "packageName": "com.paradoxplaza.kopp2",
+          "name": "KoPP2",
+          "description": null,
+          "apkFileType": "APKM",
+          "appIconColor": "#FFD700",
+          "signatures": null,
+          "formFactor": "MOBILE",
+          "targets": [
+            {
+              "version": "2.21.4",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": null,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": []
     }
   ]
 }

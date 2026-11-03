@@ -1,3 +1,9 @@
+## [1.1.0-dev.6](https://github.com/[secure]/morphe-patches/compare/v1.1.0-dev.5...v1.1.0-dev.6) (2026-11-03)
+
+### ✨ New Features
+
+* add IAP full bypass, game log overlay, and commerce docs ([4cb7b34](https://github.com/[secure]/morphe-patches/commit/4cb7b349574f86d938d2d3bd2f716d6e94e40f32))
+
 ## [1.1.0-dev.5](https://github.com/[secure]/morphe-patches/compare/v1.1.0-dev.4...v1.1.0-dev.5) (2026-11-03)
 
 ### 🐛 Bug Fixes
