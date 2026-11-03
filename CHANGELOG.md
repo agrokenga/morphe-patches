@@ -1,3 +1,9 @@
+## [1.1.0-dev.5](https://github.com/[secure]/morphe-patches/compare/v1.1.0-dev.4...v1.1.0-dev.5) (2026-11-03)
+
+### 🐛 Bug Fixes
+
+* **iap:** bypass Play Store UI by patching PurchaseBundle InitiatePurchase call ([9c334f4](https://github.com/[secure]/morphe-patches/commit/9c334f42483d59472d26631a0751be46c26f5b52))
+
 ## [1.1.0-dev.4](https://github.com/[secure]/morphe-patches/compare/v1.1.0-dev.3...v1.1.0-dev.4) (2026-11-03)
 
 ### 🐛 Bug Fixes

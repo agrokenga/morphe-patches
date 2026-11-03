@@ -24,7 +24,7 @@ Architecture notes, review findings, probe results, and CI details are in
 ## 🩹 Patches list
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.1.0-dev.4](https://github.com/agrokenga/morphe-patches/releases/tag/v1.1.0-dev.4)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;7 patches total
+> **[v1.1.0-dev.5](https://github.com/agrokenga/morphe-patches/releases/tag/v1.1.0-dev.5)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;7 patches total
 <details open>
 <summary>📦 KoPP2&nbsp;&nbsp;•&nbsp;&nbsp;6 patches</summary>
 <br>
@@ -40,7 +40,7 @@ Architecture notes, review findings, probe results, and CI details are in
 |----------|----------------|-----------|
 | [Cheats Screen Unlock](#cheats-screen-unlock) | Makes the in-game Cheats screen reachable by redirecting the Settings -> Credits button to SystemScreen.OpenCheats. Single-player UI only; it does not grant items, currency, or purchases. | • Open Cheats from Settings -> Credits |
 | [IAP Bypass Patch](#iap-bypass-patch) | Mocks PlayFab Catalog API for IAP fulfillment without platform billing. |  |
-| [IAP Free (All Items)](#iap-free-all-items) | Makes all in-game store purchases free by bypassing the PlayFab server. Patches PlayFabApiCall.Execute (premium bundles) and StoreService.PurchaseItem (in-game store) to return immediately without contacting the server. | • Make all store items free |
+| [IAP Free (All Items)](#iap-free-all-items) | Makes all in-game store purchases free by bypassing the PlayFab server and Play Store UI. Patches IAPService.PurchaseBundle to return immediately without calling IStoreController.InitiatePurchase, and patches StoreService.PurchaseItem for in-game store purchases. | • Make all store items free |
 | [IAP Native Probe](#iap-native-probe) | Read-only diagnostics for libil2cpp.so: hashes the library and checks whether the KoPP2 2.21.4 PurchaseItem and IAP grant-function offsets are reachable in both ABIs. | • Test APK write-back |
 | [Native Method Patch Demo](#native-method-patch-demo) | Replaces the harmless CheatsScreen.ShowCheatAlert method with an immediate return in both libil2cpp.so ABIs. Demonstrates static ELF RVA mapping and byte patching; it does not touch billing, purchases, entitlements, or networking. | • Patch ShowCheatAlert (demo) |
 | [Native Visual Feedback](#native-visual-feedback) | Hooks every probed purchase and PlayFab method in libil2cpp.so and logs "CALLED: <method>" through NGUIDebug's on-screen overlay. Diagnostic only; it does not change any return value, response, entitlement, or purchase result. | • Show native call log overlay |
