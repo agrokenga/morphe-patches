@@ -24,9 +24,9 @@ Architecture notes, review findings, probe results, and CI details are in
 ## 🩹 Patches list
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.1.0-dev.1](https://github.com/agrokenga/morphe-patches/releases/tag/v1.1.0-dev.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;5 patches total
+> **[v1.1.0-dev.2](https://github.com/agrokenga/morphe-patches/releases/tag/v1.1.0-dev.2)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;6 patches total
 <details open>
-<summary>📦 KoPP2&nbsp;&nbsp;•&nbsp;&nbsp;4 patches</summary>
+<summary>📦 KoPP2&nbsp;&nbsp;•&nbsp;&nbsp;5 patches</summary>
 <br>
 
 **Package name:** `com.paradoxplaza.kopp2`
@@ -42,6 +42,7 @@ Architecture notes, review findings, probe results, and CI details are in
 | [IAP Bypass Patch](#iap-bypass-patch) | Mocks PlayFab Catalog API for IAP fulfillment without platform billing. |  |
 | [IAP Native Probe](#iap-native-probe) | Read-only diagnostics for libil2cpp.so: hashes the library and checks whether the KoPP2 2.21.4 PurchaseItem and IAP grant-function offsets are reachable in both ABIs. | • Test APK write-back |
 | [Native Method Patch Demo](#native-method-patch-demo) | Replaces the harmless CheatsScreen.ShowCheatAlert method with an immediate return in both libil2cpp.so ABIs. Demonstrates static ELF RVA mapping and byte patching; it does not touch billing, purchases, entitlements, or networking. | • Patch ShowCheatAlert (demo) |
+| [Native Visual Feedback](#native-visual-feedback) | Hooks every probed purchase and PlayFab method in libil2cpp.so and logs "CALLED: <method>" through NGUIDebug's on-screen overlay. Diagnostic only; it does not change any return value, response, entitlement, or purchase result. | • Show native call log overlay |
 
 </details>
 

@@ -1,3 +1,9 @@
+## [1.1.0-dev.2](https://github.com/[secure]/morphe-patches/compare/v1.1.0-dev.1...v1.1.0-dev.2) (2026-11-03)
+
+### ✨ New Features
+
+* **patches:** add native visual feedback overlay ([0ddb676](https://github.com/[secure]/morphe-patches/commit/0ddb676398fe00af905cc7f130722626dc3b040a))
+
 ## [1.1.0-dev.1](https://github.com/[secure]/morphe-patches/compare/v1.0.1-dev.1...v1.1.0-dev.1) (2026-11-02)
 
 ### ✨ New Features
