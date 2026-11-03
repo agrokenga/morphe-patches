@@ -15,6 +15,8 @@ implementation decisions in one place.
 | [code-review.md](code-review.md) | Review findings, fixes already applied, and remaining problems. |
 | [morphe-patcher.md](morphe-patcher.md) | How Morphe Patcher handles bytecode, resources, native libraries, and APKM bundles. |
 | [kopp2-analysis.md](kopp2-analysis.md) | KoPP2 2.21.4 package layout, Unity IL2CPP structure, purchase classes, and method offsets. |
+| [catalog-inventory.md](catalog-inventory.md) | Shipped IAP catalog, runtime PlayFab bundle IDs, DLC, and in-game (non-IAP) purchases. |
+| [receipt-gated-restore.md](receipt-gated-restore.md) | Design for a per-user receipt/entitlement record that re-enables only purchased content. |
 | [probe-results.md](probe-results.md) | Results of the native probe for both ABIs, including hashes and write-back verification. |
 | [native-static-patching.md](native-static-patching.md) | Generic static method-patching notes for ELF/ARM64/ARMv7. |
 | [iap-attempts.md](iap-attempts.md) | History of the IAP patch attempts and why the current files fail. |
