@@ -1,3 +1,9 @@
+## [1.1.0-dev.3](https://github.com/[secure]/morphe-patches/compare/v1.1.0-dev.2...v1.1.0-dev.3) (2026-11-03)
+
+### ✨ New Features
+
+* **iap:** add IAP Free patch to bypass PlayFab server for store purchases ([e79dbd2](https://github.com/[secure]/morphe-patches/commit/e79dbd2f42511596bb101b8022ce5520b6adc852))
+
 ## [1.1.0-dev.2](https://github.com/[secure]/morphe-patches/compare/v1.1.0-dev.1...v1.1.0-dev.2) (2026-11-03)
 
 ### ✨ New Features
