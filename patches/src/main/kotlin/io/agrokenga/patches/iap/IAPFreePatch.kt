@@ -24,30 +24,31 @@ private val log = Logger.getLogger("IAPFreePatch")
  *   StoreService.PurchaseItem (0x251EDBC) → CloudScriptFunction.Execute →
  *   CloudScriptFunctionBase.SendRequest → PlayFabCloudScriptAPI.ExecuteFunction
  *
- * This patch targets both paths:
- * 1. PlayFabApiCall<object,object>.Execute at 0x2CA7DF0 — intercepts premium bundle purchases
- *    before they reach PlayFabClientAPI.ValidateGooglePlayPurchase
- * 2. StoreService.PurchaseItem at 0x251EDBC — intercepts in-game store purchases before
- *    they reach the CloudScript path
+ * This patch intercepts both paths at the initiation point:
+ * 1. IAPService.PurchaseBundle at 0x2515B64 — replaces the call to
+ *    IStoreController.InitiatePurchase with an immediate return, bypassing
+ *    the Play Store UI entirely for premium bundles.
+ * 2. StoreService.PurchaseItem at 0x251EDBC — intercepts in-game store purchases
+ *    before they reach the CloudScript path.
  *
- * Note: PlayFabApiCall<object,object>.ExecuteAsync (0x2CA7F3C) is NOT the purchase path.
- * It's used for catalog/config/save/auth operations. The purchase path uses the callback
- * overload PlayFabApiCall<object,object>.Execute.
+ * Note: The purchase is registered but not automatically granted. The grant/callback
+ * chain (GrantPurchase → CompletePurchase → PurchaseCallback.Invoke) is not triggered.
+ * A separate patch would be needed to automatically grant purchases.
  *
  * RVA and file offset come from Ghidra analysis of libil2cpp.so:
- * - PlayFabApiCall<object,object>.Execute: RVA 0x2CA7DF0, file offset 0x2CA3DF0
+ * - IAPService.PurchaseBundle (InitiatePurchase call site): RVA 0x2515B64, file offset 0x2511B64
  * - StoreService.PurchaseItem: RVA 0x251EDBC, file offset 0x251ADBC
  *
  * These offsets are version-specific. Re-dump both ABIs before reusing them on a
  * different app version.
  */
-private const val ARM64_PLAYFAB_EXECUTE_RVA = 0x2CA7DF0L
-private const val ARM64_PLAYFAB_EXECUTE_FILE_OFFSET = 0x2CA3DF0L
+private const val ARM64_PURCHASE_BUNDLE_INITIATE_RVA = 0x2515B64L
+private const val ARM64_PURCHASE_BUNDLE_INITIATE_FILE_OFFSET = 0x2511B64L
 private const val ARM64_STORE_PURCHASE_RVA = 0x251EDBCL
 private const val ARM64_STORE_PURCHASE_FILE_OFFSET = 0x251ADBCL
 
-private const val ARMV7_PLAYFAB_EXECUTE_RVA = 0x1D48E38L
-private const val ARMV7_PLAYFAB_EXECUTE_FILE_OFFSET = 0x1D48E38L
+private const val ARMV7_PURCHASE_BUNDLE_INITIATE_RVA = 0x14A05B0L
+private const val ARMV7_PURCHASE_BUNDLE_INITIATE_FILE_OFFSET = 0x14A05B0L
 private const val ARMV7_STORE_PURCHASE_RVA = 0x14A05B0L
 private const val ARMV7_STORE_PURCHASE_FILE_OFFSET = 0x14A05B0L
 
@@ -59,9 +60,10 @@ private val ARMV7_BX_LR = byteArrayOf(0x1E.toByte(), 0xFF.toByte(), 0x2F.toByte(
 
 val iapFreePatch = resourcePatch(
     name = "IAP Free (All Items)",
-    description = "Makes all in-game store purchases free by bypassing the PlayFab server. " +
-        "Patches PlayFabApiCall.Execute (premium bundles) and StoreService.PurchaseItem " +
-        "(in-game store) to return immediately without contacting the server.",
+    description = "Makes all in-game store purchases free by bypassing the PlayFab server and " +
+        "Play Store UI. Patches IAPService.PurchaseBundle to return immediately without " +
+        "calling IStoreController.InitiatePurchase, and patches StoreService.PurchaseItem " +
+        "for in-game store purchases.",
     default = false,
 ) {
     compatibleWith(
@@ -78,9 +80,9 @@ val iapFreePatch = resourcePatch(
         key = "iapFreeEnable",
         default = false,
         title = "Make all store items free",
-        description = "Patch PlayFabApiCall.Execute and StoreService.PurchaseItem to bypass " +
-            "the PlayFab server and return immediately. All store purchases will succeed " +
-            "without contacting the server. Disabled by default.",
+        description = "Patch IAPService.PurchaseBundle and StoreService.PurchaseItem to bypass " +
+            "the PlayFab server and Play Store UI. Purchases are registered but not automatically " +
+            "granted. Disabled by default.",
     )
 
     execute {
@@ -91,13 +93,13 @@ val iapFreePatch = resourcePatch(
         } else {
             val arm64 = get("lib/arm64-v8a/libil2cpp.so")
             if (arm64.exists()) {
-                // Patch PlayFabApiCall<object,object>.Execute — premium bundle purchases
+                // Patch IAPService.PurchaseBundle — replace InitiatePurchase call with ret
                 patchMethod(
                     file = arm64,
                     abi = "arm64-v8a",
-                    methodName = "PlayFabApiCall<object,object>.Execute",
-                    rva = ARM64_PLAYFAB_EXECUTE_RVA,
-                    expectedOffset = ARM64_PLAYFAB_EXECUTE_FILE_OFFSET,
+                    methodName = "IAPService.PurchaseBundle (InitiatePurchase call site)",
+                    rva = ARM64_PURCHASE_BUNDLE_INITIATE_RVA,
+                    expectedOffset = ARM64_PURCHASE_BUNDLE_INITIATE_FILE_OFFSET,
                     patch = ARM64_RET,
                 )
 
@@ -119,13 +121,13 @@ val iapFreePatch = resourcePatch(
 
             val armv7 = get("lib/armeabi-v7a/libil2cpp.so")
             if (armv7.exists()) {
-                // Patch PlayFabApiCall<object,object>.Execute — premium bundle purchases
+                // Patch IAPService.PurchaseBundle — replace InitiatePurchase call with bx lr
                 patchMethod(
                     file = armv7,
                     abi = "armeabi-v7a",
-                    methodName = "PlayFabApiCall<object,object>.Execute",
-                    rva = ARMV7_PLAYFAB_EXECUTE_RVA,
-                    expectedOffset = ARMV7_PLAYFAB_EXECUTE_FILE_OFFSET,
+                    methodName = "IAPService.PurchaseBundle (InitiatePurchase call site)",
+                    rva = ARMV7_PURCHASE_BUNDLE_INITIATE_RVA,
+                    expectedOffset = ARMV7_PURCHASE_BUNDLE_INITIATE_FILE_OFFSET,
                     patch = ARMV7_BX_LR,
                 )
 
